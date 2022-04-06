@@ -4,7 +4,7 @@
 
 Course/Ethereum Developer Program
 
-## Session Project Intro <2022-03-29 Tue 14:30>
+### Session Project Intro <2022-03-29 Tue 14:30>
 
 - Introduction to Blockchain Development
 - EVM, bytecode, Solidity overview
@@ -12,19 +12,19 @@ Course/Ethereum Developer Program
 - Compiling and testing sample smart contract
 - /task/ Follow Hardhat tutorial
 
-## Session Storage/Memory allocation <2022-04-01 Fri 14:30>
+### Session Storage/Memory allocation <2022-04-01 Fri 14:30>
 
 - Solidity deep dive
 - =storage= vs =memory= allocation
 - Aliasing vs copy of complex types, /i.e./, =struct= and =array=
 
-## Session ERC20 Token (Part 1) <2022-04-05 Tue 14:30>
+### Session ERC20 Token (Part 1) <2022-04-05 Tue 14:30>
 
 - Initial ERC20 token implementation
 - EIP-20: Token Standard <https://eips.ethereum.org/EIPS/eip-20>
 - mint, balanceOf, totalSupply
 
-## Session ERC20 Token (Part 2) <2022-04-08 Fri 14:30>
+### Session ERC20 Token (Part 2) <2022-04-08 Fri 14:30>
 
 - Wrap up ERC20 token implementation
 - transfer, allowance and transferFrom
@@ -32,7 +32,7 @@ Course/Ethereum Developer Program
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
 
-## Session Remote Networks
+### Session Remote Networks
 
 - Deploy and interact with a remote public network
 - Testnet and mainnet
@@ -46,31 +46,31 @@ Course/Ethereum Developer Program
 - Test against a remote public network
 - /task/ Setup Metamask&Infura/Alchemy, deploy, test and interact with a smart contract
 
-## Session Web3 App
+### Session Web3 App
 
 - Web App to interact with Smart Contracts
 - Using Svelte as front end JS framework
 - Using MetaMask to sign and send transactions
 
-## Session Local Development Network
+### Session Local Development Network
 
 - Deploy locally
 - Local development network, /Hardhat/ Network
 - Local Hardhat accounts created
 
-## Session Security Analysis
+### Session Security Analysis
 
 - Security concerns
 - Best practices
 - Reentrancy
 - Tools: Slither
 
-## Session Proxy Patterns
+### Session Proxy Patterns
 
 - OpenZeppelin Upgradeable contracts
 - Contracts Slots
 
-## Session Gasless Approval
+### Session Gasless Approval
 
 - Permit standard
 - Signature structure
@@ -79,9 +79,9 @@ Course/Ethereum Developer Program
 - Using MetaMask to sign transactions
 - Validate signed transactions
 
-## TODO Session Web3/Web2 Connections
+### TODO Session Web3/Web2 Connections
 
-## TODO Session Error handling
+### TODO Session Error handling
 
 ## Basic Sample Hardhat Project
 
