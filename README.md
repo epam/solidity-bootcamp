@@ -4,30 +4,30 @@
 
 Course/Ethereum Developer Program
 
-### Session Project Intro <2022-03-29 Tue 14:30>
+### Session Project Intro _2022-03-29 Tue 14:30_
 
 - Introduction to Blockchain Development
 - EVM, bytecode, Solidity overview
 - Using Hardhat as development environment
 - Compiling and testing sample smart contract
-- /task/ Follow Hardhat tutorial
+- **TASK** Follow Hardhat tutorial <https://hardhat.org/tutorial/>
 
-### Session Storage/Memory allocation <2022-04-01 Fri 14:30>
+### Session Storage/Memory allocation _2022-04-01 Fri 14:30_
 
 - Solidity deep dive
-- =storage= vs =memory= allocation
-- Aliasing vs copy of complex types, /i.e./, =struct= and =array=
+- `storage` vs `memory` allocation
+- Aliasing vs copy of complex types, _i.e._, `struct` and `array`
 
-### Session ERC20 Token (Part 1) <2022-04-05 Tue 14:30>
+### Session ERC20 Token (Part 1) _2022-04-05 Tue 14:30_
 
 - Initial ERC20 token implementation
 - EIP-20: Token Standard <https://eips.ethereum.org/EIPS/eip-20>
-- mint, balanceOf, totalSupply
+- `mint`, `balanceOf`, `totalSupply`
 
 ### Session ERC20 Token (Part 2) <2022-04-08 Fri 14:30>
 
 - Wrap up ERC20 token implementation
-- transfer, allowance and transferFrom
+- `transfer`, `allowance` and `transferFrom`
 - modifiers, minter role
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
@@ -44,7 +44,7 @@ Course/Ethereum Developer Program
 - Deploy to a remote public network
 - Interact with a remote public network
 - Test against a remote public network
-- /task/ Setup Metamask&Infura/Alchemy, deploy, test and interact with a smart contract
+- **TASK** Setup Metamask&Infura/Alchemy, deploy, test and interact with a smart contract
 
 ### Session Web3 App
 
