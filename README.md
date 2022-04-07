@@ -29,6 +29,7 @@ Course/Ethereum Developer Program
 - Wrap up ERC20 token implementation
 - `transfer`, `allowance` and `transferFrom`
 - modifiers, owner and minter role
+- Ownable
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
 
