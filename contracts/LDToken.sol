@@ -1,10 +1,11 @@
-// SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-// Adapted from https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC20/ERC20.sol
+/**
+ * https://eips.ethereum.org/EIPS/eip-20
+ */
 contract LDToken {
-
-    mapping (address => uint256) _balances;
+    mapping(address => uint256) _balances;
 
     uint256 _totalSupply;
 
@@ -28,12 +29,53 @@ contract LDToken {
         return _balances[account];
     }
 
-    function transfer(address to, uint256 amount) external returns (bool) {
-    }
+    function transfer(address to, uint256 amount) external returns (bool) {}
+
+    /**
+     * Transfers _value amount of tokens from address _from to address _to, and MUST fire the Transfer event.
+     *
+     * The transferFrom method is used for a withdraw workflow,
+     * allowing contracts to transfer tokens on your behalf.
+     * This can be used for example to allow a contract to transfer tokens on
+     * your behalf and/or to charge fees in sub-currencies.
+     * The function SHOULD throw unless the _from account has deliberately
+     * authorized the sender of the message via some mechanism.
+     *
+     * Note Transfers of 0 values MUST be treated as normal transfers and fire the Transfer event.
+     */
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    ) public returns (bool success) {}
+
+    /**
+     * Allows _spender to withdraw from your account multiple times,
+     * up to the _value amount.
+     * If this function is called again it overwrites the current allowance with _value.
+     *
+     * NOTE: To prevent attack vectors like the one described here and discussed here,
+     * clients SHOULD make sure to create user interfaces in such a way
+     * that they set the allowance first to 0 before setting it to another value for the same spender.
+     * THOUGH The contract itself shouldn’t enforce it,
+     * to allow backwards compatibility with contracts deployed before.
+     */
+    function approve(address _spender, uint256 _value)
+        public
+        returns (bool success)
+    {}
+
+    /**
+     * Returns the amount which _spender is still allowed to withdraw from _owner.
+     */
+    function allowance(address _owner, address _spender)
+        public
+        view
+        returns (uint256 remaining)
+    {}
 
     function _mint(address account, uint256 amount) external virtual {
         _balances[account] += amount;
         _totalSupply += amount;
     }
-
 }

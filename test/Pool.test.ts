@@ -1,9 +1,9 @@
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 describe("Pool", function () {
 
-    it("should ...", async function () {
+    it("should be able to make a deposit", async function () {
         const [_, owner, alice] = await ethers.getSigners();
 
         const Pool = await ethers.getContractFactory("Pool");

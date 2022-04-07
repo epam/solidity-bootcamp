@@ -27,8 +27,10 @@ Course/Ethereum Developer Program
 ### Session ERC20 Token (Part 2) <2022-04-08 Fri 14:30>
 
 - Wrap up ERC20 token implementation
-- `transfer`, `allowance` and `transferFrom`
+- `transfer`
+- `transferFrom`, `approve` and `allowance`
 - modifiers, owner and minter role
+- Ownable
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
 
