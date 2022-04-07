@@ -28,7 +28,7 @@ Course/Ethereum Developer Program
 
 - Wrap up ERC20 token implementation
 - `transfer`, `allowance` and `transferFrom`
-- modifiers, minter role
+- modifiers, owner and minter role
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
 
@@ -82,6 +82,19 @@ Course/Ethereum Developer Program
 ### TODO Session Web3/Web2 Connections
 
 ### TODO Session Error handling
+
+## Recommended Readings
+
+> **Mastering Ethereum** <https://github.com/ethereumbook/ethereumbook> is a book for developers, offering a guide to the operation and use of the Ethereum, Ethereum Classic, RootStock (RSK) and other compatible EVM-based open blockchains.
+
+by Andreas M. Antonopoulos, also author of _Mastering Bitcoin_ <https://github.com/bitcoinbook/bitcoinbook> and
+Gavin Wood, co-founder of Ethereum and early designer of Solidity.
+
+## Frequently Asked Questions
+
+### How does it prevent double-spend?
+
+consensus forking
 
 ## Basic Sample Hardhat Project
 
