@@ -1,10 +1,13 @@
+import { JsonRpcSigner } from '@ethersproject/providers';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Signer } from 'ethers';
+import { Contract, providers, Signer } from 'ethers';
 import { ethers } from 'hardhat';
-
-import { signERC2612Permit }  from 'eth-permit';
+import { getUSDCFaucet, signERC2612Permit } from './lib/eth';
 
 describe("Deposit", function () {
+
+    let token: Contract;
 
     before(async () => {
         const [owner, alice, bob] = await ethers.getSigners();
@@ -15,6 +18,11 @@ describe("Deposit", function () {
         for (const user of [owner, alice, bob]) {
             await faucet(user.address, amountToClaim);
         }
+
+        // const LDTokenPermit = await ethers.getContractFactory('LDTokenPermit.sol');
+        // token = await LDTokenPermit.deploy();
+        // await token.deployed();
+
     });
 
     it("Should return the new greeting once it's changed", async function () {
@@ -42,7 +50,7 @@ describe("Deposit", function () {
         const n = await USDC.connect(owner).nonces(owner.address);
         console.log(n);
 
-        const result = await signERC2612Permit(ethers.provider, domain, sender, deposit.address, value);
+        const result = await signERC2612Permit(owner, domain, deposit.address, value, n);
         console.log(result);
 
         // await token.methods.permit(senderAddress, store.address, value, result.deadline, result.v, result.r, result.s).send({
@@ -52,30 +60,3 @@ describe("Deposit", function () {
         await (await deposit.connect(owner).deposit(value, result.deadline, result.v, result.r, result.s)).wait();
     });
 });
-
-async function getUSDCFaucet() {
-    const usdcAddr = '0x5425890298aed601595a70AB815c96711a31Bc65';
-
-    const usdcFaucet = new ethers.Contract(usdcAddr, new ethers.utils.Interface([
-        "function configureMinter(address minter, uint256 minterAllowedAmount)",
-        "function mint(address _to, uint256 _amount)",
-    ]));
-
-    const minter = (await ethers.getSigners())[0];
-    await withImpersonateAccount(
-        '0xe3b41fc3bd92fae6c8a05a83b234c51ff4c065d5',
-        signer => usdcFaucet.connect(signer).configureMinter(minter.address, '0x1000000000000')
-    );
-
-    return async function (accountAddr: string, amountToClaim: number) {
-        await usdcFaucet.connect(minter).mint(accountAddr, amountToClaim);
-    };
-}
-
-async function withImpersonateAccount(accountAddr: string, action: (signer: Signer) => Promise<void>) {
-    const { ethers: { getSigner }, network: { provider } } = require('hardhat');
-
-    await provider.request({ method: 'hardhat_impersonateAccount', params: [accountAddr] });
-    await action(await getSigner(accountAddr));
-    await provider.request({ method: 'hardhat_stopImpersonatingAccount', params: [accountAddr] });
-}
