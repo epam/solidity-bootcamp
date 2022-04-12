@@ -65,7 +65,7 @@ export default {
       url: chains.fuji.url,
       gasPrice: 225000000000,
       chainId: chains.fuji.chainId,
-      accounts: process.env.PRIVATE_KEY !== undefined ? ['' + process.env.PRIVATE_KEY] : [],
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
   },
   gasReporter: {
