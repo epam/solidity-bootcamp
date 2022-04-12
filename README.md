@@ -24,7 +24,7 @@ Course/Ethereum Developer Program
 - EIP-20: Token Standard <https://eips.ethereum.org/EIPS/eip-20>
 - `mint`, `balanceOf`, `totalSupply`
 
-### § Session ERC20 Token (Part 2) <2022-04-08 Fri 14:30>
+### § Session ERC20 Token (Part 2) _2022-04-08 Fri 14:30_
 
 - Wrap up ERC20 token implementation
 - `transfer`
@@ -34,11 +34,11 @@ Course/Ethereum Developer Program
 - Display in MetaMask wallet
 - Write unit tests with Hardhat, Mocha and Chai
 
-### § Session Remote Networks
+### § Session Remote Networks _2022-04-12 Tue 14:30_
 
-- Deploy and interact with a remote public network
+- Deploy and interact with a local and remote public network
 - Testnet and mainnet
-- Setting a wallet up with Metamask
+- Setting a wallet up with Metamask/Fuji
 - Use Faucets to fund your account
 - Kovan Faucet <https://ethdrop.dev/>
 - Create a new account, public and private keyes
@@ -46,7 +46,9 @@ Course/Ethereum Developer Program
 - Deploy to a remote public network
 - Interact with a remote public network
 - Test against a remote public network
-- **TASK** Setup Metamask&Infura/Alchemy, deploy, test and interact with a smart contract
+- **Q&A.** [OpenZeppelin impl](https://docs.openzeppelin.com/contracts/4.x/), `virtual` and `override`, `EIP-165` and `supportsInterface`
+- **TASK.** Setup Metamask or Avalanche's Fuji Wallet, Infura/Alchemy, deploy, test and interact with a smart contract.
+Follow tutorial at <https://hardhat.org/tutorial/deploying-to-a-live-network.html>.
 
 ### § Session Web3 App
 
