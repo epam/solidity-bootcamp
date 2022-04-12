@@ -98,6 +98,24 @@ Gavin Wood, co-founder of Ethereum and early designer of Solidity.
 
 consensus forking
 
+## Topics
+
+- What is a blockchain?
+- What are transactions and blocks?
+- How do P2P systems operate?
+- The most prominent consensus mechanisms
+- Difference between private, consortium, and public networks
+- What does the data structure look like?
+- How do Smart Contracts work?
+- What is the Ethereum Virtual Machine?
+- What is a Hash?
+- How do public/private keys work?
+- What is a Merkle tree?
+- What is the double-spend problem?
+- The Ethereum ecosystem and DApps
+- What is Mist and how does it work?
+- What is Ether, an account, a Faucet?
+
 ## Basic Sample Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
