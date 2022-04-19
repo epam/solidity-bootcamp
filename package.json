@@ -8,12 +8,15 @@
     "build": "hardhat compile",
     "test": "hardhat test",
     "gas": "REPORT_GAS=true hardhat test",
+    "localhost": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js",
     "dev": "vite"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@metamask/providers": "^8.1.1",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.5.0",
