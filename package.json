@@ -7,7 +7,8 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "gas": "REPORT_GAS=true hardhat test"
+    "gas": "REPORT_GAS=true hardhat test",
+    "dev": "vite"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.5.0",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.41",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
@@ -23,8 +25,11 @@
     "ethers": "^5.6.2",
     "hardhat": "^2.9.2",
     "hardhat-gas-reporter": "^1.0.8",
+    "svelte": "^3.47.0",
+    "svelte-preprocess": "^4.10.6",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "vite": "^2.9.5"
   },
   "mocha": {
     "require": "ts-node/register/files",
