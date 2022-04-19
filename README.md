@@ -23,6 +23,7 @@ Course/Ethereum Developer Program
 - Initial ERC20 token implementation
 - EIP-20: Token Standard <https://eips.ethereum.org/EIPS/eip-20>
 - `mint`, `balanceOf`, `totalSupply`
+- Error handling in contracts & Reverting Transactions
 
 ### § Session ERC20 Token (Part 2) _2022-04-08 Fri 14:30_
 
@@ -50,16 +51,22 @@ Course/Ethereum Developer Program
 - **TASK.** Setup Metamask or Avalanche's Fuji Wallet, Infura/Alchemy, deploy, test and interact with a smart contract.
 Follow tutorial at <https://hardhat.org/tutorial/deploying-to-a-live-network.html>.
 
-### § Session Web3 App
+### § Session Private Keys _2022-04-14 Thu 11:30_
+
+- Hardhat & Ethers
+- Private & Public Key generation
+- Importing to MetaMask and Avalanche's Wallet
+- Eliptic Curve background
+- One-way/hash functions
+
+### § Session Web3 App, Localhost network & MetaMask _2022-04-19 Tue 14:30_
 
 - Web App to interact with Smart Contracts
 - Using Svelte as front end JS framework
 - Using MetaMask to sign and send transactions
-
-### § Session Local Development Network
-
+- Setting up a project to host both Front-end app and Hardhat contracts
 - Deploy locally
-- Local development network, /Hardhat/ Network
+- Local development network, _Hardhat_ Network
 - Local Hardhat accounts created
 
 ### § Session Security Analysis
@@ -82,10 +89,6 @@ Follow tutorial at <https://hardhat.org/tutorial/deploying-to-a-live-network.htm
 - Sign transactions
 - Using MetaMask to sign transactions
 - Validate signed transactions
-
-### § TODO Session Web3/Web2 Connections
-
-### § TODO Session Error handling
 
 ## Recommended Readings
 
