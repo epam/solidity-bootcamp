@@ -2,9 +2,6 @@
     import { Contract } from "ethers";
     import { onMount } from "svelte";
 
-    // import logo from './assets/svelte.png'
-    // import Counter from './lib/Counter.svelte'
-
     export let contract: Contract;
     let name: string = "";
     let symbol: string = "";
@@ -17,12 +14,10 @@
 </script>
 
 <main>
-    <!-- <img src={logo} alt="Svelte Logo" /> -->
-    <h1>Hello Typescript!</h1>
+    <h1>Hello Ethers!</h1>
 
-    {contract.address}
-    {name}
-    {symbol}
+    Name: {name}
+    Symbol: {symbol}
 
     <button
         on:click={async () =>
@@ -56,11 +51,6 @@
         text-align: center;
         padding: 1em;
         margin: 0 auto;
-    }
-
-    img {
-        height: 16rem;
-        width: 16rem;
     }
 
     h1 {
