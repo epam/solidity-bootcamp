@@ -12,6 +12,8 @@ contract LDToken {
     string public _name;
     string public _symbol;
 
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+
     constructor(string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
@@ -29,7 +31,19 @@ contract LDToken {
         return _balances[account];
     }
 
-    function transfer(address to, uint256 amount) external returns (bool) {}
+    function transfer(address to, uint256 amount) external returns (bool) {
+        require(
+            _balances[msg.sender] >= amount,
+            "LDToken: sender does not have enough balance"
+        );
+
+        _balances[to] += amount;
+        _balances[msg.sender] -= amount;
+
+        emit Transfer(msg.sender, to, amount);
+
+        return true;
+    }
 
     /**
      * Transfers _value amount of tokens from address _from to address _to, and MUST fire the Transfer event.
@@ -77,5 +91,7 @@ contract LDToken {
     function _mint(address account, uint256 amount) external virtual {
         _balances[account] += amount;
         _totalSupply += amount;
+
+        emit Transfer(address(0), account, amount);
     }
 }
