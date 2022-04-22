@@ -3,9 +3,10 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { Contract, providers, Signer } from 'ethers';
 import { ethers } from 'hardhat';
-import { getUSDCFaucet, signERC2612Permit } from './lib/eth';
+import { signERC2612Permit } from './lib/sign';
+import { getUSDCFaucet } from './lib/faucet';
 
-describe("Deposit", function () {
+describe.skip("Deposit", function () {
 
     let token: Contract;
 

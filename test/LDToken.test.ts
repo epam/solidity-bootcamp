@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 describe("LDToken", function () {
@@ -46,6 +46,37 @@ describe("LDToken", function () {
 
         expect(await token.balanceOf(bob.address)).to.equal(3_000);
         expect(await token.balanceOf(charlie.address)).to.equal(2_000);
+    });
+
+    it('should be able to approve spending', async function () {
+        expect(await token.allowance(alice.address, bob.address)).to.be.equal(0);
+
+        await token.connect(alice).approve(bob.address, 100_000);
+        expect(await token.allowance(alice.address, bob.address)).to.be.equal(100_000);
+
+        await token.connect(alice).approve(bob.address, 50_000);
+        expect(await token.allowance(alice.address, bob.address)).to.be.equal(50_000);
+    });
+
+    it('should be able transfer from spender', async function () {
+        let balanceOf = await token.balanceOf(alice.address) as BigNumber;
+        let balanceOfCharlie = await token.balanceOf(charlie.address) as BigNumber;
+
+        await token.connect(owner)._mint(alice.address, 10_000_000);
+        balanceOf = balanceOf.add(10_000_000);
+        expect(await token.balanceOf(alice.address)).to.equal(balanceOf);
+
+        const approveAmount = 100_000;
+        await token.connect(alice).approve(bob.address, approveAmount);
+
+        const transferAmount = 50_000;
+        await expect(token.connect(bob).transferFrom(alice.address, charlie.address, transferAmount))
+            .to.emit(token, 'Transfer')
+            .withArgs(alice.address, charlie.address, transferAmount);
+
+        expect(await token.balanceOf(alice.address)).to.equal(balanceOf.sub(transferAmount));
+        expect(await token.balanceOf(charlie.address)).to.equal(balanceOfCharlie.add(transferAmount));
+        expect(await token.allowance(alice.address, bob.address)).to.equal(approveAmount - transferAmount);
     });
 
 });

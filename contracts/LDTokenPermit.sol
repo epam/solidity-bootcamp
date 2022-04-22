@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 /**
  * @dev
  */
-contract USDCMock is ERC20("USD Coin", "USDC"), EIP712("USD Coin", "2") {
+contract LDTokenPermit is ERC20("USD Coin", "USDC"), EIP712("USD Coin", "2") {
     using Counters for Counters.Counter;
 
     mapping(address => Counters.Counter) private _nonces;
