@@ -34,42 +34,32 @@
     let approveAddress: string;
     let permitNonce = "";
     let permitAmount = "";
-    let permitSignature: any;
+    let sig: any;
     let ldtokenAddr = "";
-
-    const USDC = new Contract(
-        "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-        new ethers.utils.Interface([
-            "function nonces(address owner) view returns (uint256)",
-        ]),
-        provider
-    );
 
     onMount(async () => {
         chainId = (await provider.getNetwork()).chainId;
-
         name = await contract._name();
         symbol = await contract._symbol();
     });
 
     async function handleSignPermit() {
-        const n = 1;
-        await USDC.nonces(await contract.signer.getAddress());
+        const nonce = await contract.nonces(await contract.signer.getAddress());
         const domain = {
-            name: "USD Coin",
+            name: await contract._name(),
             version: "2",
             chainId: chainId!,
-            verifyingContract: USDC.address,
+            verifyingContract: contract.address,
         };
 
-        permitSignature = await signERC2612Permit(
+        sig = await signERC2612Permit(
             contract.signer as any,
             domain,
-            "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+            deposit.address,
             permitAmount,
-            n
+            nonce
         );
-        console.debug("Permit Signature:", permitSignature);
+        console.debug("Permit Signature:", sig);
     }
 </script>
 
@@ -119,9 +109,7 @@
         <button on:click={() => contract2._approve(approveAddress, 20_000)}
             >Approve To</button
         >
-        <button on:click={() => deposit.approveDeposit(20_000)}
-            >Deposit</button
-        >
+        <button on:click={() => deposit.approveDeposit(20_000)}>Deposit</button>
     </p>
 
     <section>
@@ -129,7 +117,7 @@
         <p>
             <button
                 on:click={async () => {
-                    permitNonce = await USDC.nonces(
+                    permitNonce = await contract.nonces(
                         await contract.signer.getAddress()
                     );
                 }}>Nonce is {permitNonce}</button
@@ -141,6 +129,16 @@
             placeholder="permit amount"
         />
         <button on:click={handleSignPermit}>Sign Permit</button>
+        <button
+            on:click={() =>
+                deposit.permitDeposit(
+                    permitAmount,
+                    sig.deadline,
+                    sig.v,
+                    sig.r,
+                    sig.s
+                )}>Deposit</button
+        >
     </section>
 </main>
 
