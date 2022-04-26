@@ -7,7 +7,7 @@ import { Signer } from "ethers";
  * 
  * This value is used to differentiate signatures coming from different contracts.
  */
-interface ERC20Domain {
+export interface ERC20Domain {
 
     /**
      * The `name` the ERC20 contract was assigned to.

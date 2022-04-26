@@ -2,6 +2,8 @@ import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { ERC20Domain, signERC2612Permit } from './lib/sign';
+import { _TypedDataEncoder } from 'ethers/lib/utils';
 
 describe("LDToken", function () {
 
@@ -77,6 +79,46 @@ describe("LDToken", function () {
         expect(await token.balanceOf(alice.address)).to.equal(balanceOf.sub(transferAmount));
         expect(await token.balanceOf(charlie.address)).to.equal(balanceOfCharlie.add(transferAmount));
         expect(await token.allowance(alice.address, bob.address)).to.equal(approveAmount - transferAmount);
+    });
+
+    describe('EIP-2612: permit & 712-signed approvals', () => {
+
+        let chainId: number;
+        let domain: ERC20Domain;
+
+        before(async () => {
+            chainId = (await token.provider.getNetwork()).chainId;
+            domain = {
+                name: await token._name(),
+                version: "2",
+                chainId,
+                verifyingContract: token.address,
+            };
+        });
+
+        it('should return corrent DOMAIN_SEPARATOR', async function () {
+            expect(await token.DOMAIN_SEPARATOR())
+                .to.be.equal(_TypedDataEncoder.hashDomain(domain));
+        });
+
+        it('should be able to approve spending via permit', async function () {
+            async function permit(amount: number) {
+                const nonce = await token.nonces(alice.address);
+                const sig = await signERC2612Permit(
+                    alice,
+                    domain,
+                    bob.address,
+                    amount,
+                    nonce,
+                );
+                await token.permit(alice.address, bob.address, amount, sig.deadline, sig.v, sig.r, sig.s);
+                expect(await token.allowance(alice.address, bob.address)).to.be.equal(amount);
+            }
+
+            await permit(100_000);
+            await permit(50_000);
+        });
+
     });
 
 });

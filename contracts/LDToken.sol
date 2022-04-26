@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 /**
  * https://eips.ethereum.org/EIPS/eip-20
  */
-contract LDToken is EIP712("USD Coin", "2") {
+contract LDToken is EIP712 {
     using Counters for Counters.Counter;
 
     mapping(address => Counters.Counter) private _nonces;
@@ -21,9 +21,15 @@ contract LDToken is EIP712("USD Coin", "2") {
     string public _name;
     string public _symbol;
 
+    // solhint-disable-next-line var-name-mixedcase
+    bytes32 private immutable _PERMIT_TYPEHASH =
+        keccak256(
+            "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
+        );
+
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_) EIP712(name_, "2") {
         _name = name_;
         _symbol = symbol_;
     }
@@ -132,5 +138,47 @@ contract LDToken is EIP712("USD Coin", "2") {
      */
     function nonces(address owner) external view returns (uint256) {
         return _nonces[owner].current();
+    }
+
+    /**
+     * @dev See {IERC20Permit-permit}.
+     */
+    function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(block.timestamp <= deadline, "FiatTokenV2: permit is expired");
+
+        bytes32 structHash = keccak256(
+            abi.encode(
+                _PERMIT_TYPEHASH,
+                owner,
+                spender,
+                value,
+                _useNonce(owner),
+                deadline
+            )
+        );
+
+        bytes32 hash = _hashTypedDataV4(structHash);
+
+        address signer = ECDSA.recover(hash, v, r, s);
+        require(signer == owner, "EIP2612: invalid signature");
+
+        _allowances[owner][spender] = value;
+    }
+
+    /**
+     * @dev "Consume a nonce": return the current value and increment.
+     */
+    function _useNonce(address owner) internal returns (uint256 current) {
+        Counters.Counter storage nonce = _nonces[owner];
+        current = nonce.current();
+        nonce.increment();
     }
 }
