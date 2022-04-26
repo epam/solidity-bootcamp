@@ -12,10 +12,11 @@ async function main() {
     const contract = await Factory.deploy(...args);
     await contract.deployed();
     console.log(name, "deployed to:", contract.address);
+    return contract;
   }
 
-  await deploy("LDToken", "Learning&Development Token", "LDT");
-  await deploy("Deposit");
+  const token = await deploy("LDToken", "Learning&Development Token", "LDT");
+  await deploy("Deposit", token.address);
 }
 
 main()
