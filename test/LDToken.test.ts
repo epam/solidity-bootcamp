@@ -23,8 +23,8 @@ describe("LDToken", function () {
     });
 
     it('should have valid name and symbol', async function () {
-        expect(await token._name()).to.equal('Learning&Development Solidity');
-        expect(await token._symbol()).to.equal('LDT');
+        expect(await token.name()).to.equal('Learning&Development Solidity');
+        expect(await token.symbol()).to.equal('LDT');
     });
 
     it('should be able to mint tokens', async function () {
@@ -53,10 +53,10 @@ describe("LDToken", function () {
     it('should be able to approve spending', async function () {
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(0);
 
-        await token.connect(alice)._approve(bob.address, 100_000);
+        await token.connect(alice).approve(bob.address, 100_000);
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(100_000);
 
-        await token.connect(alice)._approve(bob.address, 50_000);
+        await token.connect(alice).approve(bob.address, 50_000);
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(50_000);
     });
 
@@ -69,7 +69,7 @@ describe("LDToken", function () {
         expect(await token.balanceOf(alice.address)).to.equal(balanceOf);
 
         const approveAmount = 100_000;
-        await token.connect(alice)._approve(bob.address, approveAmount);
+        await token.connect(alice).approve(bob.address, approveAmount);
 
         const transferAmount = 50_000;
         await expect(token.connect(bob).transferFrom(alice.address, charlie.address, transferAmount))
@@ -89,7 +89,7 @@ describe("LDToken", function () {
         before(async () => {
             chainId = (await token.provider.getNetwork()).chainId;
             domain = {
-                name: await token._name(),
+                name: await token.name(),
                 version: "2",
                 chainId,
                 verifyingContract: token.address,

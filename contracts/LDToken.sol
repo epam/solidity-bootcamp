@@ -18,8 +18,8 @@ contract LDToken is EIP712 {
 
     uint256 _totalSupply;
 
-    string public _name;
-    string public _symbol;
+    string public name;
+    string public symbol;
 
     // solhint-disable-next-line var-name-mixedcase
     bytes32 private immutable _PERMIT_TYPEHASH =
@@ -30,8 +30,8 @@ contract LDToken is EIP712 {
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
     constructor(string memory name_, string memory symbol_) EIP712(name_, "2") {
-        _name = name_;
-        _symbol = symbol_;
+        name = name_;
+        symbol = symbol_;
     }
 
     function decimals() public pure returns (uint8) {
@@ -87,7 +87,7 @@ contract LDToken is EIP712 {
      * THOUGH The contract itself shouldn’t enforce it,
      * to allow backwards compatibility with contracts deployed before.
      */
-    function _approve(address spender, uint256 amount) external returns (bool) {
+    function approve(address spender, uint256 amount) external returns (bool) {
         _allowances[msg.sender][spender] = amount;
         return true;
     }

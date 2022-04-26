@@ -31,7 +31,7 @@ describe("Deposit", function () {
     it("should transfer to deposit using approve", async function () {
         const balance = await token.balanceOf(deposit.address) as BigNumber;
 
-        await token.connect(alice)._approve(deposit.address, 100_000);
+        await token.connect(alice).approve(deposit.address, 100_000);
         await deposit.connect(alice).approveDeposit(100_000);
 
         expect(await token.balanceOf(deposit.address)).to.be.equal(balance.add(100_000));
@@ -42,7 +42,7 @@ describe("Deposit", function () {
 
         const chainId = (await token.provider.getNetwork()).chainId;
         const domain = {
-            name: await token._name(),
+            name: await token.name(),
             version: "2",
             chainId,
             verifyingContract: token.address,

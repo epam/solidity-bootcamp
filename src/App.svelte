@@ -1,30 +1,23 @@
 <script lang="ts">
-    import { Contract, ethers, providers } from "ethers";
-    import { getAddress } from "ethers/lib/utils";
+    import { Contract, ethers } from "ethers";
     import { onMount } from "svelte";
     import { signERC2612Permit } from "../test/lib/sign";
 
-    import ldtoken from "../artifacts/contracts/LDToken.sol/LDToken.json";
-    import depositSol from "../artifacts/contracts/Deposit.sol/Deposit.json";
+    import LDToken from "../artifacts/contracts/LDToken.sol/LDToken.json";
+    import Deposit from "../artifacts/contracts/Deposit.sol/Deposit.json";
+
     const provider = new ethers.providers.Web3Provider(window.ethereum as any);
     const networkPromise = provider.getNetwork();
 
-    const contract = new Contract(
+    const token = new Contract(
         "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-        ldtoken.abi,
+        LDToken.abi,
         provider.getSigner()
     );
 
     const deposit = new Contract(
         "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-        depositSol.abi,
-        provider.getSigner()
-    );
-
-    const contract2 = new Contract(
-        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-        // ["function approve(address, uint256) returns (bool)"],
-        ["function _approve(address, uint256) external returns (bool)"],
+        Deposit.abi,
         provider.getSigner()
     );
 
@@ -36,22 +29,22 @@
     let sig: any;
 
     onMount(async () => {
-        name = await contract._name();
-        symbol = await contract._symbol();
+        name = await token.name();
+        symbol = await token.symbol();
     });
 
     async function handleSignPermit() {
         const chainId = (await provider.getNetwork()).chainId;
-        const nonce = await contract.nonces(await contract.signer.getAddress());
+        const nonce = await token.nonces(await token.signer.getAddress());
         const domain = {
-            name: await contract._name(),
+            name: await token.name(),
             version: "2",
             chainId: chainId!,
-            verifyingContract: contract.address,
+            verifyingContract: token.address,
         };
 
         sig = await signERC2612Permit(
-            contract.signer as any,
+            token.signer as any,
             domain,
             deposit.address,
             amount,
@@ -82,17 +75,15 @@
         <p>
             <button
                 on:click={async () =>
-                    contract._mint(
-                        await contract.signer.getAddress(),
-                        10_000_000
-                    )}>Mint to me</button
+                    token._mint(await token.signer.getAddress(), 10_000_000)}
+                >Mint to me</button
             >
         </p>
     </section>
 
     <p>
         <input bind:value={toAddress} type="text" />
-        <button on:click={() => contract.transfer(toAddress, 10_000)}
+        <button on:click={() => token.transfer(toAddress, 10_000)}
             >Transfer To</button
         >
     </p>
@@ -107,10 +98,10 @@
         <p>
             <span style="font-style: oblique;">using approve</span>
 
-            <button on:click={() => contract2._approve(deposit.address, 20_000)}
+            <button on:click={() => token.approve(deposit.address, amount)}
                 >Approve To</button
             >
-            <button on:click={() => deposit.approveDeposit(20_000)}
+            <button on:click={() => deposit.approveDeposit(amount)}
                 >Deposit</button
             >
         </p>
@@ -118,8 +109,8 @@
             <span style="font-style: oblique;"> using signed permit</span>
             <button
                 on:click={async () => {
-                    permitNonce = await contract.nonces(
-                        await contract.signer.getAddress()
+                    permitNonce = await token.nonces(
+                        await token.signer.getAddress()
                     );
                 }}>Nonce is {permitNonce}</button
             >
