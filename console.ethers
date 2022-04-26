@@ -1,0 +1,23 @@
+net http://localhost:8545
+
+0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+
+0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+
+0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+
+0x5FbDB2315678afecb367f032d93F642f64180aa3
+_name() view returns (string)
+_symbol() view returns (string)
+decimals() view returns (uint8)
+totalSupply() view returns (uint256)
+
+balanceOf(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266) view returns (uint256)
+balanceOf(0x70997970c51812dc3a010c7d01b50e0d17dc79c8) view returns (uint256)
+balanceOf(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512) view returns (uint256)
+allowance(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512) public view returns (uint256 remaining)
+
+
+transfer(address _to, uint256 _value) public returns (bool success)
+transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+approve(, uint256 _value) public returns (bool success)
