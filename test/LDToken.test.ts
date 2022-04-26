@@ -51,10 +51,10 @@ describe("LDToken", function () {
     it('should be able to approve spending', async function () {
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(0);
 
-        await token.connect(alice).approve(bob.address, 100_000);
+        await token.connect(alice)._approve(bob.address, 100_000);
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(100_000);
 
-        await token.connect(alice).approve(bob.address, 50_000);
+        await token.connect(alice)._approve(bob.address, 50_000);
         expect(await token.allowance(alice.address, bob.address)).to.be.equal(50_000);
     });
 
@@ -67,7 +67,7 @@ describe("LDToken", function () {
         expect(await token.balanceOf(alice.address)).to.equal(balanceOf);
 
         const approveAmount = 100_000;
-        await token.connect(alice).approve(bob.address, approveAmount);
+        await token.connect(alice)._approve(bob.address, approveAmount);
 
         const transferAmount = 50_000;
         await expect(token.connect(bob).transferFrom(alice.address, charlie.address, transferAmount))

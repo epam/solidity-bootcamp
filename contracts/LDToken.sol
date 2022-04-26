@@ -1,10 +1,17 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+
 /**
  * https://eips.ethereum.org/EIPS/eip-20
  */
-contract LDToken {
+contract LDToken is EIP712("USD Coin", "2") {
+    using Counters for Counters.Counter;
+
+    mapping(address => Counters.Counter) private _nonces;
+
     mapping(address => uint256) _balances;
 
     mapping(address => mapping(address => uint256)) private _allowances;
@@ -74,10 +81,7 @@ contract LDToken {
      * THOUGH The contract itself shouldn’t enforce it,
      * to allow backwards compatibility with contracts deployed before.
      */
-    function approve(address spender, uint256 amount)
-        public
-        returns (bool success)
-    {
+    function _approve(address spender, uint256 amount) external returns (bool) {
         _allowances[msg.sender][spender] = amount;
         return true;
     }
@@ -113,5 +117,20 @@ contract LDToken {
         _balances[to] += amount;
 
         emit Transfer(from, to, amount);
+    }
+
+    /**
+     * @dev See {IERC20Permit-DOMAIN_SEPARATOR}.
+     */
+    // solhint-disable-next-line func-name-mixedcase
+    function DOMAIN_SEPARATOR() external view returns (bytes32) {
+        return _domainSeparatorV4();
+    }
+
+    /**
+     * @dev See {IERC20Permit-nonces}.
+     */
+    function nonces(address owner) external view returns (uint256) {
+        return _nonces[owner].current();
     }
 }

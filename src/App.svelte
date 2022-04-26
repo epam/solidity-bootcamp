@@ -4,15 +4,34 @@
     import { onMount } from "svelte";
     import { signERC2612Permit } from "../test/lib/sign";
 
+    import ldtoken from "../artifacts/contracts/LDToken.sol/LDToken.json";
+    import depositSol from "../artifacts/contracts/Deposit.sol/Deposit.json";
     const provider = new ethers.providers.Web3Provider(window.ethereum as any);
     const networkPromise = provider.getNetwork();
 
-    export let contract: Contract;
+    const contract = new Contract(
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        ldtoken.abi,
+        provider.getSigner()
+    );
 
+    const deposit = new Contract(
+        "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        depositSol.abi,
+        provider.getSigner()
+    );
+
+    const contract2 = new Contract(
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        // ["function approve(address, uint256) returns (bool)"],
+        ["function _approve(address, uint256) external returns (bool)"],
+        provider.getSigner()
+    );
     let chainId: number | null = null;
     let name: string = "";
     let symbol: string = "";
     let toAddress: string;
+    let approveAddress: string;
     let permitNonce = "";
     let permitAmount = "";
     let permitSignature: any;
@@ -82,16 +101,28 @@
         <div>Symbol: {symbol}</div>
     </section>
 
-    <button
-        on:click={async () =>
-            contract._mint(await contract.signer.getAddress(), 10_000_000)}
-        >Mint to me</button
-    >
-
-    <input bind:value={toAddress} type="text" />
-    <button on:click={() => contract.transfer(toAddress, 10_000)}
-        >Transfer</button
-    >
+    <p>
+        <button
+            on:click={async () =>
+                contract._mint(await contract.signer.getAddress(), 10_000_000)}
+            >Mint to me</button
+        >
+    </p>
+    <p>
+        <input bind:value={toAddress} type="text" />
+        <button on:click={() => contract.transfer(toAddress, 10_000)}
+            >Transfer To</button
+        >
+    </p>
+    <p>
+        <input bind:value={approveAddress} type="text" />
+        <button on:click={() => contract2._approve(approveAddress, 20_000)}
+            >Approve To</button
+        >
+        <button on:click={() => deposit.approveDeposit(20_000)}
+            >Deposit</button
+        >
+    </p>
 
     <section>
         <h3>Sign Permit Approval</h3>
