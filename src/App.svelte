@@ -27,23 +27,21 @@
         ["function _approve(address, uint256) external returns (bool)"],
         provider.getSigner()
     );
-    let chainId: number | null = null;
+
     let name: string = "";
     let symbol: string = "";
     let toAddress: string;
-    let approveAddress: string;
     let permitNonce = "";
-    let permitAmount = "";
+    let amount = "";
     let sig: any;
-    let ldtokenAddr = "";
 
     onMount(async () => {
-        chainId = (await provider.getNetwork()).chainId;
         name = await contract._name();
         symbol = await contract._symbol();
     });
 
     async function handleSignPermit() {
+        const chainId = (await provider.getNetwork()).chainId;
         const nonce = await contract.nonces(await contract.signer.getAddress());
         const domain = {
             name: await contract._name(),
@@ -56,7 +54,7 @@
             contract.signer as any,
             domain,
             deposit.address,
-            permitAmount,
+            amount,
             nonce
         );
         console.debug("Permit Signature:", sig);
@@ -78,43 +76,46 @@
     </section>
 
     <section>
-        <h3>LD Token Contract</h3>
-
-        <input bind:value={ldtokenAddr} placeholder="LD token address" />
-        <button
-            on:click={async () => {
-                name = await contract._name();
-                symbol = await contract._symbol();
-            }}>Get LD Token Info</button
-        >
-        <div>Name: {name}</div>
-        <div>Symbol: {symbol}</div>
+        <h3>LD Token</h3>
+        <p>Name: {name}</p>
+        <p>Symbol: {symbol}</p>
+        <p>
+            <button
+                on:click={async () =>
+                    contract._mint(
+                        await contract.signer.getAddress(),
+                        10_000_000
+                    )}>Mint to me</button
+            >
+        </p>
     </section>
 
-    <p>
-        <button
-            on:click={async () =>
-                contract._mint(await contract.signer.getAddress(), 10_000_000)}
-            >Mint to me</button
-        >
-    </p>
     <p>
         <input bind:value={toAddress} type="text" />
         <button on:click={() => contract.transfer(toAddress, 10_000)}
             >Transfer To</button
         >
     </p>
-    <p>
-        <input bind:value={approveAddress} type="text" />
-        <button on:click={() => contract2._approve(approveAddress, 20_000)}
-            >Approve To</button
-        >
-        <button on:click={() => deposit.approveDeposit(20_000)}>Deposit</button>
-    </p>
-
     <section>
-        <h3>Sign Permit Approval</h3>
+        <h3>Deposit</h3>
+        <input
+            bind:value={amount}
+            type="number"
+            placeholder="amount to deposit"
+        />
+
         <p>
+            <span style="font-style: oblique;">using approve</span>
+
+            <button on:click={() => contract2._approve(deposit.address, 20_000)}
+                >Approve To</button
+            >
+            <button on:click={() => deposit.approveDeposit(20_000)}
+                >Deposit</button
+            >
+        </p>
+        <p>
+            <span style="font-style: oblique;"> using signed permit</span>
             <button
                 on:click={async () => {
                     permitNonce = await contract.nonces(
@@ -122,37 +123,21 @@
                     );
                 }}>Nonce is {permitNonce}</button
             >
+            <button on:click={handleSignPermit}>Sign Permit</button>
+            <button
+                on:click={() =>
+                    deposit.permitDeposit(
+                        amount,
+                        sig.deadline,
+                        sig.v,
+                        sig.r,
+                        sig.s
+                    )}>Deposit</button
+            >
         </p>
-        <input
-            bind:value={permitAmount}
-            type="number"
-            placeholder="permit amount"
-        />
-        <button on:click={handleSignPermit}>Sign Permit</button>
-        <button
-            on:click={() =>
-                deposit.permitDeposit(
-                    permitAmount,
-                    sig.deadline,
-                    sig.v,
-                    sig.r,
-                    sig.s
-                )}>Deposit</button
-        >
+        <p />
     </section>
 </main>
-
-<footer>
-    <p>
-        Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-        apps.
-    </p>
-
-    <p>
-        Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a>
-        for the officially supported framework, also powered by Vite!
-    </p>
-</footer>
 
 <style>
     :root {
