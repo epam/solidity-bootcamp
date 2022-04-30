@@ -1,23 +1,27 @@
-net http://localhost:8545
+# net fuji
 
-0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+# net add
 
-0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+# net http://localhost:8545
 
-0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 as hh0
+    token._mint(this, uint32 50000, 253323)
+    token._mint(this, uint32 50000)
+    token.balanceOf(this) view returns (uint256)
+    token.approve(deposit, uint256 1500) returns (bool success)
+    token.allowance(this, deposit) public view returns (uint256 remaining)
+    deposit.approveDeposit(uint256 1000)
 
-0x5FbDB2315678afecb367f032d93F642f64180aa3
-_name() view returns (string)
-_symbol() view returns (string)
-decimals() view returns (uint8)
-totalSupply() view returns (uint256)
+0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 as deposit
 
-balanceOf(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266) view returns (uint256)
-balanceOf(0x70997970c51812dc3a010c7d01b50e0d17dc79c8) view returns (uint256)
-balanceOf(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512) view returns (uint256)
-allowance(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512) public view returns (uint256 remaining)
+    token.balanceOf(this) view returns (uint256)
 
+0x5FbDB2315678afecb367f032d93F642f64180aa3 as token
 
-transfer(address _to, uint256 _value) public returns (bool success)
-transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
-approve(, uint256 _value) public returns (bool success)
+    name() view returns (string)
+
+    symbol() view returns (string)
+
+    decimals() view returns (uint8)
+
+    totalSupply() view returns (uint256)
